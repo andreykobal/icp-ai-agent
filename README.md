@@ -1,61 +1,86 @@
-# send_http_post_rust
+# CFO AI Agent on ICP with Rust
 
-Welcome to your new send_http_post_rust project and to the internet computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+This project implements a decentralized, on-chain AI CFO Agent hosted on the Internet Computer Protocol (ICP) using a Rust backend and a frontend interface. The agent provides a conversational interface for discussing financial matters, generating annual reports, and, in the future, will perform on-chain financial management tasks.
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+## Current Capabilities
 
-To learn more before you start working with send_http_post_rust, see the following documentation available online:
+1. **Annual Reports:** The AI can generate and deliver financial reports with insights into company performance, revenue, profit growth, expenses, and projections.
+2. **Conversational Financial Assistant:** Users can interact with the AI in real time to discuss the financial status of the company, receiving insightful responses based on financial data.
 
-- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
-- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Rust Canister Development Guide](https://internetcomputer.org/docs/current/developer-docs/backend/rust/)
-- [ic-cdk](https://docs.rs/ic-cdk)
-- [ic-cdk-macros](https://docs.rs/ic-cdk-macros)
-- [Candid Introduction](https://internetcomputer.org/docs/current/developer-docs/backend/candid/)
+## Future Features
 
-If you want to start working on your project right away, you might want to try the following commands:
+The CFO AI Agent will support advanced on-chain accounting and offer enhanced features such as:
+- **Financial Analysis:** Analyzing financial statements to provide actionable insights.
+- **Invoice Management:** Sending invoices and tracking their status.
+- **Automated Payments:** Paying invoices directly on-chain.
 
-```bash
-cd send_http_post_rust/
-dfx help
-dfx canister --help
+## Technical Overview
+
+The project leverages the ICP’s HTTPS outcalls feature to send HTTP POST requests, allowing secure interactions between the Rust canister backend and the AI's API. The frontend, implemented in JavaScript, interacts with the backend canister to facilitate real-time user queries and display AI responses.
+
+## Getting Started
+
+### Prerequisites
+
+- [Rust](https://www.rust-lang.org/) installed
+- [dfx (Dfinity SDK)](https://internetcomputer.org/docs/current/developer-docs/build/install-upgrade-remove) to deploy on ICP
+
+### Installation
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/yourusername/cfo-ai-agent.git
+   cd cfo-ai-agent
+   ```
+
+2. **Deploy on ICP**
+   - Install dfx and start a local Internet Computer instance.
+   - Deploy the canister with `dfx deploy`.
+
+3. **Frontend Setup**
+   - Link the frontend to your deployed canister and serve it locally.
+
+### Usage
+
+To interact with the AI CFO agent:
+1. Enter financial questions or year-end queries into the input field on the frontend interface.
+2. View the AI-generated responses based on the company's financial data.
+
+### Example Usage
+
+The CFO AI Agent can handle prompts like:
+- "What was our net profit for 2024?"
+- "Analyze XYZ Corp's revenue growth over the past year."
+  
+This interaction uses `send_http_post_request`, which is structured as follows:
+
+```rust
+async fn send_http_post_request(
+    system_message: String,
+    user_message: String,
+    temperature: f64,
+    top_p: f64,
+    max_tokens: u32,
+    stream: bool,
+) -> String { /* function code here */ }
 ```
 
-## Running the project locally
+### Code Structure
 
-If you want to test your project locally, you can use the following commands:
+- **Backend (Rust Canister)**: Implements HTTP POST requests using ICP's HTTPS outcall feature.
+- **Frontend (JavaScript)**: Provides a web interface where users can interact with the CFO agent.
 
-```bash
-# Starts the replica, running in the background
-dfx start --background
+### Future Development
 
-# Deploys your canisters to the replica and generates your candid interface
-dfx deploy
-```
+The following capabilities will be added:
+- **Financial Analytics**: Comprehensive analysis of company financials.
+- **Invoice Automation**: Handling and paying invoices.
+- **On-chain Accounting**: Enabling robust on-chain accounting mechanisms.
 
-Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
+## Contributing
 
-If you have made changes to your backend canister, you can generate a new candid interface with
+Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request.
 
-```bash
-npm run generate
-```
+## License
 
-at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
-
-If you are making frontend changes, you can start a development server with
-
-```bash
-npm start
-```
-
-Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
-
-### Note on frontend environment variables
-
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
-
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-- Write your own `createActor` constructor
+This project is licensed under the MIT License.
