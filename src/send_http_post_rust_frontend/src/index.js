@@ -26,8 +26,12 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       stream
     );
 
-    // Display the response
-    document.getElementById("response").innerText = response;
+    // Parse the JSON response and extract the assistant's content
+    const responseJson = JSON.parse(response);
+    const assistantMessage = responseJson.choices[0].message.content;
+
+    // Display the assistant's message content
+    document.getElementById("response").innerText = assistantMessage;
   } catch (error) {
     document.getElementById("response").innerText = `Error: ${error.message}`;
   } finally {
