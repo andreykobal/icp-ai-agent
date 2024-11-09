@@ -2,6 +2,8 @@
 
 This project implements a decentralized, on-chain AI CFO Agent hosted on the Internet Computer Protocol (ICP) using a Rust backend and a frontend interface. The agent provides a conversational interface for discussing financial matters, generating annual reports, and, in the future, will perform on-chain financial management tasks.
 
+<img width="389" alt="Screenshot 2024-11-09 at 23 34 10" src="https://github.com/user-attachments/assets/3a3d8f01-b426-4654-9ed9-2e7e5090616c">
+
 ## Current Capabilities
 
 1. **Annual Reports:** The AI can generate and deliver financial reports with insights into company performance, revenue, profit growth, expenses, and projections.
