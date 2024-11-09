@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
-  <title>send_http_post_rust</title>
+  <title>Messenger Interface</title>
   <base href="/" />
   <link rel="icon" href="favicon.ico" />
   <link type="text/css" rel="stylesheet" href="main.css" />
@@ -12,12 +12,11 @@
 
 <body>
   <main>
+    <section id="messagesContainer"></section>
     <form action="#">
-      <label for="userPrompt">Enter your prompt: &nbsp;</label>
       <input id="userPrompt" alt="User Prompt" type="text" required />
       <button type="submit">Send</button>
     </form>
-    <section id="response"></section>
   </main>
   <script type="module" src="index.js"></script>
 </body>

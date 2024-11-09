@@ -4,11 +4,16 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const button = e.target.querySelector("button");
 
-  // Retrieve the user prompt from the input field
-  const userPrompt = document.getElementById("userPrompt").value.toString();
+  const userPrompt = document.getElementById("userPrompt").value.trim();
+  if (!userPrompt) return;
+
   button.setAttribute("disabled", true);
 
-  // Hardcoded values for the backend request
+  // Display user's message
+  displayMessage(userPrompt, "user-message");
+  document.getElementById("userPrompt").value = "";  // Clear input field
+
+  // Backend request parameters
   const systemMessage = "You are Nastya, 18 years old.";
   const temperature = 0.7;
   const top_p = 0.9;
@@ -16,7 +21,6 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   const stream = false;
 
   try {
-    // Call the send_http_post_request method on the backend canister
     const response = await send_http_post_rust_backend.send_http_post_request(
       systemMessage,
       userPrompt,
@@ -26,17 +30,24 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       stream
     );
 
-    // Parse the JSON response and extract the assistant's content
     const responseJson = JSON.parse(response);
     const assistantMessage = responseJson.choices[0].message.content;
 
-    // Display the assistant's message content
-    document.getElementById("response").innerText = assistantMessage;
+    // Display assistant's message
+    displayMessage(assistantMessage, "bot-message");
   } catch (error) {
-    document.getElementById("response").innerText = `Error: ${error.message}`;
+    displayMessage(`Error: ${error.message}`, "bot-message");
   } finally {
     button.removeAttribute("disabled");
   }
-
-  return false;
 });
+
+function displayMessage(text, className) {
+  const messageContainer = document.createElement("div");
+  messageContainer.className = className;
+  messageContainer.innerText = text;
+
+  const messagesContainer = document.getElementById("messagesContainer");
+  messagesContainer.appendChild(messageContainer);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;  // Scroll to the latest message
+}
