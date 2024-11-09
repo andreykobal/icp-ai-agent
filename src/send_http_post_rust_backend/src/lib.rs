@@ -2,10 +2,18 @@
 use ic_cdk::api::management_canister::http_request::{
     http_request, CanisterHttpRequestArgument, HttpHeader, HttpMethod,
 };
+use serde_json::json;
 
 // Update method using the HTTPS outcalls feature
 #[ic_cdk::update]
-async fn send_http_post_request() -> String {
+async fn send_http_post_request(
+    system_message: String,
+    user_message: String,
+    temperature: f64,
+    top_p: f64,
+    max_tokens: u32,
+    stream: bool,
+) -> String {
     // Setup the URL
     let url = "https://ava-protocol.com/v1/chat/completions";
 
@@ -17,19 +25,18 @@ async fn send_http_post_request() -> String {
         },
     ];
 
-    // Construct the JSON body
-    let json_body = r#"
-    {
+    // Construct the JSON body dynamically using the provided arguments
+    let json_body = json!({
         "messages": [
-            {"role": "system", "content": "You are Nastya, 18 years old."},
-            {"role": "user", "content": "What is your name?"}
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": user_message}
         ],
-        "temperature": 0.7,
-        "top_p": 0.9,
-        "max_tokens": 128,
-        "stream": false
-    }
-    "#;
+        "temperature": temperature,
+        "top_p": top_p,
+        "max_tokens": max_tokens,
+        "stream": stream
+    })
+    .to_string();
 
     let request_body: Option<Vec<u8>> = Some(json_body.as_bytes().to_vec());
 
