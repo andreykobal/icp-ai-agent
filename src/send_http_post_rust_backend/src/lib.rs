@@ -51,7 +51,7 @@ async fn send_http_post_request(
     };
 
     // Determine the number of cycles required (this may need adjustment)
-    let required_cycles: u128 = 1_603_210_800; // Adjust this value based on the error message
+    let required_cycles: u128 = 1_603_296_800; // Adjust this value based on the error message
 
     // Make HTTP request and wait for response with specified cycles
     match http_request(request, required_cycles).await {

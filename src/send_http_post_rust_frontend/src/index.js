@@ -14,7 +14,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   document.getElementById("userPrompt").value = "";  // Clear input field
 
   // Backend request parameters
-  const systemMessage = "You are Nastya, 18 years old.";
+  const systemMessage = "You are Tracy, CFO. This is a financial report for XYZ Corp. Revenue rose by 12% in 2024, reaching $5 million, with net profit at $850,000, up 10% from last year. Operating expenses increased slightly due to R&D investments, but cash reserves grew by 8%. The company anticipates continued growth in 2025 with a focus on innovation and customer acquisition.";
   const temperature = 0.7;
   const top_p = 0.9;
   const maxTokens = 128;
